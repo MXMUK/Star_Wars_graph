@@ -4,7 +4,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+// import { useSearchParams } from 'next/navigation';
 import type { Person } from '../types/person';
 import { getAllHeroes } from '../api/people';
 import { PersonCard } from '../components/person-card';
@@ -15,13 +15,13 @@ const Page = (): JSX.Element => {
   const [people, setPeople] = useState<Person[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
-  const searchParams = typeof window !== 'undefined' ? useSearchParams() : null; // Check if on client side
+  // const searchParams = useSearchParams();
 
   const loadPeople = useCallback(async () => {
     setIsLoading(true);
 
     try {
-      const currentPage = searchParams ? Number(searchParams.get('page')) || 1 : 1;
+      const currentPage = 1;
       const allPeople = await getAllHeroes(`?page=${currentPage}`);
 
       setPeople(allPeople.results);
@@ -31,11 +31,11 @@ const Page = (): JSX.Element => {
     } finally {
       setIsLoading(false);
     }
-  }, [searchParams]);
+  }, []);
 
   useEffect(() => {
     void loadPeople();
-  }, [loadPeople, searchParams]);
+  }, [loadPeople]);
 
   return (
     <div className="container flex flex-col items-center ml-auto mr-auto  p-5 gap-10">
@@ -51,3 +51,4 @@ const Page = (): JSX.Element => {
 };
 
 export default Page;
+
