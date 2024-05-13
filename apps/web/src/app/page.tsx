@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/require-await -- delete me */
 /* eslint-disable no-unused-vars -- delete me */
 /* eslint-disable @typescript-eslint/no-unused-vars -- delete me */
 'use client';
@@ -5,7 +6,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import type { Person } from '../types/person';
-import { getAllHeroes } from '../api/people';
+// import { getAllHeroes } from '../api/people';
 // import { PersonCard } from '../components/person-card';
 // import { PersonCardSkeleton } from '../components/skeletons/person-card-skeleton';
 // import { Pagination } from '../components/pagination';
@@ -19,17 +20,17 @@ const Page = (): JSX.Element => {
   const loadPeople = useCallback(async () => {
     setIsLoading(true);
 
-    try {
-      const currentPage = Number(searchParams.get('page')) || 1;
-      const allPeople = await getAllHeroes(`?page=${currentPage}`);
+    // try {
+    //   const currentPage = Number(searchParams.get('page')) || 1;
+    //   const allPeople = await getAllHeroes(`?page=${currentPage}`);
 
-      setPeople(allPeople.results);
-      setTotalPages(Math.ceil(allPeople.count / 10));
-    } catch (err) {
-      throw new Error(String(err));
-    } finally {
-      setIsLoading(false);
-    }
+    //   setPeople(allPeople.results);
+    //   setTotalPages(Math.ceil(allPeople.count / 10));
+    // } catch (err) {
+    //   throw new Error(String(err));
+    // } finally {
+    //   setIsLoading(false);
+    // }
   }, [searchParams]);
 
   useEffect(() => {
