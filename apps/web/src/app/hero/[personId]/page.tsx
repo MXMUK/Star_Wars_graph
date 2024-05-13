@@ -51,97 +51,97 @@ const PersonGraph: FC<Props> = ({ params }): JSX.Element => {
   const [films, setFilms] = useState<Film[]>([]);
   const [vehicles, setVehicles] = useState<ProcessedVehicles[]>([]);
 
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
 
-  const loadData = useCallback(async () => {
-    setIsLoading(true);
+  // const loadData = useCallback(async () => {
+  //   setIsLoading(true);
 
-    try {
-      const heroInfo = await getHeroById(params.personId);
-      const filmPromises = heroInfo.films.map((filmId) => getFilmById(filmId.toString()));
-      const filmsWithHero = await axios.all(filmPromises);
-      const herosVehiclesInFilms = await axios.all(
-        filmsWithHero
-          .map((film) => ({
-            filmId: film.id,
-            herosVehicles: film.vehicles.filter((vehicleId) =>
-              heroInfo.vehicles.includes(vehicleId)
-            ),
-          }))
-          .filter((filmWithVehiclesIds) => filmWithVehiclesIds.herosVehicles.length)
-          .map(async (filmWithVehiclesIds) => {
-            const vehiclePromises = filmWithVehiclesIds.herosVehicles.map((vehicleId) =>
-              getVehicleById(vehicleId.toString())
-            );
+  //   try {
+  //     const heroInfo = await getHeroById(params.personId);
+  //     const filmPromises = heroInfo.films.map((filmId) => getFilmById(filmId.toString()));
+  //     const filmsWithHero = await axios.all(filmPromises);
+  //     const herosVehiclesInFilms = await axios.all(
+  //       filmsWithHero
+  //         .map((film) => ({
+  //           filmId: film.id,
+  //           herosVehicles: film.vehicles.filter((vehicleId) =>
+  //             heroInfo.vehicles.includes(vehicleId)
+  //           ),
+  //         }))
+  //         .filter((filmWithVehiclesIds) => filmWithVehiclesIds.herosVehicles.length)
+  //         .map(async (filmWithVehiclesIds) => {
+  //           const vehiclePromises = filmWithVehiclesIds.herosVehicles.map((vehicleId) =>
+  //             getVehicleById(vehicleId.toString())
+  //           );
 
-            const filmWithVehicles = await axios.all(vehiclePromises);
+  //           const filmWithVehicles = await axios.all(vehiclePromises);
 
-            return {
-              filmId: filmWithVehiclesIds.filmId,
-              herosVehicles: filmWithVehicles,
-            };
-          })
-      );
+  //           return {
+  //             filmId: filmWithVehiclesIds.filmId,
+  //             herosVehicles: filmWithVehicles,
+  //           };
+  //         })
+  //     );
 
-      setVehicles(herosVehiclesInFilms);
-      setFilms(filmsWithHero);
-      setHero(heroInfo);
-    } catch (err) {
-      throw new Error(String(err));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [params.personId]);
+  //     setVehicles(herosVehiclesInFilms);
+  //     setFilms(filmsWithHero);
+  //     setHero(heroInfo);
+  //   } catch (err) {
+  //     throw new Error(String(err));
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // }, [params.personId]);
 
-  useEffect(() => {
-    void loadData();
-  }, [loadData]);
+  // useEffect(() => {
+  //   void loadData();
+  // }, [loadData]);
 
-  useEffect(() => {
-    if (hero && films.length) {
-      const heroNode = [
-        {
-          id: hero.id.toString(),
-          type: 'custom',
-          position: { x: 10, y: 10 },
-          data: JSON.stringify(hero),
-        },
-      ];
+  // useEffect(() => {
+  //   if (hero && films.length) {
+  //     const heroNode = [
+  //       {
+  //         id: hero.id.toString(),
+  //         type: 'custom',
+  //         position: { x: 10, y: 10 },
+  //         data: JSON.stringify(hero),
+  //       },
+  //     ];
 
-      const horizontalGapNodes = 200;
+  //     const horizontalGapNodes = 200;
 
-      const filmsNodes = films.map((film, i) => ({
-        id: film.id.toString(),
-        type: 'custom',
-        position: { x: horizontalGapNodes * i + 10, y: 150 },
-        data: JSON.stringify(film),
-      }));
+  //     const filmsNodes = films.map((film, i) => ({
+  //       id: film.id.toString(),
+  //       type: 'custom',
+  //       position: { x: horizontalGapNodes * i + 10, y: 150 },
+  //       data: JSON.stringify(film),
+  //     }));
 
-      let allVehiclesNodes: {
-        id: string;
-        type: string;
-        position: { x: number; y: number };
-        data: string;
-      }[] = [];
+  //     let allVehiclesNodes: {
+  //       id: string;
+  //       type: string;
+  //       position: { x: number; y: number };
+  //       data: string;
+  //     }[] = [];
 
-      if (vehicles.length) {
-        allVehiclesNodes = vehicles.reduce<
-          { id: string; type: string; position: { x: number; y: number }; data: string }[]
-        >((allVehiclesStorage, vehicleWithFilmId) => {
-          const vehiclesNodes = vehicleWithFilmId.herosVehicles.map((vehicle, i) => ({
-            id: vehicle.id.toString(),
-            type: 'custom',
-            position: { x: horizontalGapNodes * i + 10, y: 300 },
-            data: JSON.stringify(vehicle),
-          }));
+  //     if (vehicles.length) {
+  //       allVehiclesNodes = vehicles.reduce<
+  //         { id: string; type: string; position: { x: number; y: number }; data: string }[]
+  //       >((allVehiclesStorage, vehicleWithFilmId) => {
+  //         const vehiclesNodes = vehicleWithFilmId.herosVehicles.map((vehicle, i) => ({
+  //           id: vehicle.id.toString(),
+  //           type: 'custom',
+  //           position: { x: horizontalGapNodes * i + 10, y: 300 },
+  //           data: JSON.stringify(vehicle),
+  //         }));
 
-          return [...allVehiclesStorage, ...vehiclesNodes];
-        }, []);
-      }
+  //         return [...allVehiclesStorage, ...vehiclesNodes];
+  //       }, []);
+  //     }
 
-      setNodes([...heroNode, ...filmsNodes, ...allVehiclesNodes]);
-    }
-  }, [hero, films.length, setNodes, vehicles, films]);
+  //     setNodes([...heroNode, ...filmsNodes, ...allVehiclesNodes]);
+  //   }
+  // }, [hero, films.length, setNodes, vehicles, films]);
 
   return (
     <div className="h-screen">

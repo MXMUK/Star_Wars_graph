@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars -- delete me */
-/* eslint-disable @typescript-eslint/no-unused-vars -- delete me */
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
@@ -38,13 +36,13 @@ const Page = (): JSX.Element => {
 
   return (
     <div className="container flex flex-col items-center ml-auto mr-auto  p-5 gap-10">
-      {/* <div className="grid xl:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-5 justify-center">
+      <div className="grid xl:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-5 justify-center">
         {!isLoading
           ? people.map((person) => <PersonCard key={person.id} person={person} />)
           : Array.from(Array(10).keys()).map((i) => <PersonCardSkeleton key={i} />)}
       </div>
 
-      <Pagination totalPages={totalPages} /> */}
+      <Pagination totalPages={totalPages} />
     </div>
   );
 };
