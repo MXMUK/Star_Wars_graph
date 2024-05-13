@@ -16,13 +16,13 @@ const Page = (): JSX.Element => {
   const [people, setPeople] = useState<Person[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
-  // const searchParams = useSearchParams();
+  const searchParams = useSearchParams();
 
   const loadPeople = useCallback(async () => {
     setIsLoading(true);
 
     try {
-      const currentPage = 1;
+      const currentPage = Number(searchParams.get('page')) || 1;
       const allPeople = await getAllHeroes(`?page=${currentPage}`);
 
       setPeople(allPeople.results);
