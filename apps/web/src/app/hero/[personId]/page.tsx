@@ -170,7 +170,7 @@ const PersonGraph: FC<Props> = ({ params }): JSX.Element => {
             },
           }));
 
-          return [...allVehiclesStorage, ...vehiclesNodes];
+          return [heroNode, ...allVehiclesStorage, ...vehiclesNodes];
         }, []);
 
         edgesFromFilmsToVehicle = allVehiclesNodes.map((vehicleNode) => {
