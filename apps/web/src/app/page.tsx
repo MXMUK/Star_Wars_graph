@@ -15,7 +15,7 @@ const Page = (): JSX.Element => {
   const [people, setPeople] = useState<Person[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
 
   // const loadPeople = useCallback(async () => {
   //   setIsLoading(true);
