@@ -15,7 +15,7 @@ const Page = (): JSX.Element => {
   const [people, setPeople] = useState<Person[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
 
   const loadPeople = useCallback(async () => {
     setIsLoading(true);
@@ -31,11 +31,11 @@ const Page = (): JSX.Element => {
     // } finally {
     //   setIsLoading(false);
     // }
-  }, [searchParams]);
+  }, []);
 
   useEffect(() => {
     void loadPeople();
-  }, [loadPeople, searchParams]);
+  }, [loadPeople]);
 
   return (
     <div className="container flex flex-col items-center ml-auto mr-auto  p-5 gap-10">
