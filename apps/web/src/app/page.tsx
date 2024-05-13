@@ -1,7 +1,3 @@
-/* eslint-disable no-console -- delete me*/
-/* eslint-disable @typescript-eslint/require-await -- delete me */
-/* eslint-disable no-unused-vars -- delete me */
-/* eslint-disable @typescript-eslint/no-unused-vars -- delete me */
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
@@ -32,7 +28,7 @@ const Page = (): JSX.Element => {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [searchParams]);
 
   useEffect(() => {
     void loadPeople();
@@ -46,7 +42,7 @@ const Page = (): JSX.Element => {
           : Array.from(Array(10).keys()).map((i) => <PersonCardSkeleton key={i} />)}
       </div>
 
-      {/* <Pagination totalPages={totalPages} /> */}
+      <Pagination totalPages={totalPages} />
     </div>
   );
 };
