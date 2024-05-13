@@ -18,7 +18,7 @@ const Page = (): JSX.Element => {
   const [totalPages, setTotalPages] = useState(0);
   const searchParams = useSearchParams();
 
-  const loadPeople = useCallback(async () => {
+  const loadPeople = useCallback(() => {
     setIsLoading(true);
 
     // try {
@@ -35,7 +35,7 @@ const Page = (): JSX.Element => {
   }, [searchParams]);
 
   useEffect(() => {
-    void loadPeople();
+    loadPeople();
   }, [loadPeople, searchParams]);
 
   return (
