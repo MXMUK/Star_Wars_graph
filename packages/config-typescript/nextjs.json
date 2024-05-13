@@ -15,9 +15,6 @@
     "strict": true,
     "target": "es5"
   },
-  "experimental": {
-    "missingSuspenseWithCSRBailout": false
-  },
   "include": ["src", "next-env.d.ts"],
   "exclude": ["node_modules"]
 }
