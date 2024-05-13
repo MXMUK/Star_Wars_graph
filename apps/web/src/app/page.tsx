@@ -46,7 +46,7 @@ const Page = (): JSX.Element => {
           : Array.from(Array(10).keys()).map((i) => <PersonCardSkeleton key={i} />)}
       </div>
 
-      <Pagination totalPages={totalPages} />
+      {/* <Pagination totalPages={totalPages} /> */}
     </div>
   );
 };
