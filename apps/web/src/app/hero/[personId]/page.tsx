@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars -- delete me */
+/* eslint-disable @typescript-eslint/no-unused-vars -- delete me  */
 'use client';
 
 import type { FC } from 'react';
