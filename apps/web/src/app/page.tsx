@@ -32,7 +32,7 @@ const Page = (): JSX.Element => {
     // } finally {
     //   setIsLoading(false);
     // }
-  }, [searchParams]);
+  }, []);
 
   useEffect(() => {
     void loadPeople();
