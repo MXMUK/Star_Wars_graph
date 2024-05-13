@@ -21,17 +21,17 @@ const Page = (): JSX.Element => {
   const loadPeople = useCallback(async () => {
     setIsLoading(true);
 
-    // try {
-    //   const currentPage = Number(searchParams.get('page')) || 1;
-    //   const allPeople = await getAllHeroes(`?page=${currentPage}`);
+    try {
+      const currentPage = 1;
+      const allPeople = await getAllHeroes(`?page=${currentPage}`);
 
-    //   setPeople(allPeople.results);
-    //   setTotalPages(Math.ceil(allPeople.count / 10));
-    // } catch (err) {
-    //   throw new Error(String(err));
-    // } finally {
-    //   setIsLoading(false);
-    // }
+      setPeople(allPeople.results);
+      setTotalPages(Math.ceil(allPeople.count / 10));
+    } catch (err) {
+      throw new Error(String(err));
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
   useEffect(() => {
