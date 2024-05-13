@@ -12,10 +12,10 @@ import { PersonCardSkeleton } from '../components/skeletons/person-card-skeleton
 import { Pagination } from '../components/pagination';
 
 const Page = (): JSX.Element => {
-  const [people, setPeople] = useState<Person[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [totalPages, setTotalPages] = useState(0);
-  const searchParams = useSearchParams();
+  // const [people, setPeople] = useState<Person[]>([]);
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [totalPages, setTotalPages] = useState(0);
+  // const searchParams = useSearchParams();
 
   // const loadPeople = useCallback(async () => {
   //   setIsLoading(true);
