@@ -1,3 +1,4 @@
+/* eslint-disable no-console -- delete me*/
 /* eslint-disable @typescript-eslint/require-await -- delete me */
 /* eslint-disable no-unused-vars -- delete me */
 /* eslint-disable @typescript-eslint/no-unused-vars -- delete me */
@@ -17,38 +18,40 @@ const Page = (): JSX.Element => {
   const [totalPages, setTotalPages] = useState(0);
   // const searchParams = useSearchParams();
 
-  // const loadPeople = useCallback(async () => {
-  //   setIsLoading(true);
+  const loadPeople = useCallback(async () => {
+    setIsLoading(true);
 
-  //   try {
-  //     const currentPage = Number(searchParams.get('page')) || 1;
-  //     const allPeople = await getAllHeroes(`?page=${currentPage}`);
+    try {
+      // const currentPage = Number(searchParams.get('page')) || 1;
+      const allPeople = await getAllHeroes(`?page=1`);
 
-  //     setPeople(allPeople.results);
-  //     setTotalPages(Math.ceil(allPeople.count / 10));
-  //   } catch (err) {
-  //     throw new Error(String(err));
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // }, [searchParams]);
+      setPeople(allPeople.results);
+      setTotalPages(Math.ceil(allPeople.count / 10));
+    } catch (err) {
+      throw new Error(String(err));
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
-  // useEffect(() => {
-  //   // void loadPeople();
-  // }, [loadPeople, searchParams]);
+  useEffect(() => {
+    void loadPeople();
+  }, [loadPeople]);
 
   return (
     <div className="container flex flex-col items-center ml-auto mr-auto  p-5 gap-10">
-      {/* <div className="grid xl:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-5 justify-center">
+      <div className="grid xl:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-5 justify-center">
         {!isLoading
           ? people.map((person) => <PersonCard key={person.id} person={person} />)
           : Array.from(Array(10).keys()).map((i) => <PersonCardSkeleton key={i} />)}
       </div>
 
-      <Pagination totalPages={totalPages} /> */}
+      <Pagination totalPages={totalPages} />
     </div>
   );
 };
 
 export default Page;
+
+
 
