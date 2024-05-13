@@ -3,7 +3,7 @@ import axios from "axios";
 
 /* eslint-disable @typescript-eslint/no-explicit-any -- we can send any data to the server */
 const BASE_URL
-  = 'https://sw-api.starnavi.io/people/'
+  = 'https://sw-api.starnavi.io'
 
 type RequestMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 

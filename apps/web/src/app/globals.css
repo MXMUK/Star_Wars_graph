@@ -11,3 +11,7 @@
   background-color: var(--bg-color);
   color: var(--text-color);
 }
+
+.react-flow__panel {
+  display: none;
+}

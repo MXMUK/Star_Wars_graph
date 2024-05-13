@@ -10,14 +10,16 @@ export const metadata: Metadata = {
   description: "Description of the characters of the Star Wars universe",
 };
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: {
   children: React.ReactNode;
-}): JSX.Element {
+}): JSX.Element => {
   return (
     <html lang="en">
       <body className={inter.className}>{children}</body>
     </html>
   );
 }
+
+export default RootLayout;
