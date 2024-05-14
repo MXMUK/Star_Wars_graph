@@ -109,9 +109,9 @@ const PersonGraph: FC<Props> = ({ params }): JSX.Element => {
           })
       );
 
-      setVehicles(herosVehiclesInFilms);
-      setFilms(filmsWithHero);
       setHero(heroInfo);
+      setFilms(filmsWithHero);
+      setVehicles(herosVehiclesInFilms);
     } catch (err) {
       throw new Error(String(err));
     }
@@ -124,7 +124,7 @@ const PersonGraph: FC<Props> = ({ params }): JSX.Element => {
   useEffect(() => {
     if (hero && films.length) {
       const heroNode = {
-        id: hero.id.toString(),
+        id: `${hero.id}h`,
         type: 'custom',
         position: { x: 10, y: 10 },
         data: {
@@ -135,7 +135,7 @@ const PersonGraph: FC<Props> = ({ params }): JSX.Element => {
       const horizontalGapNodes = 200;
 
       const filmsNodes = films.map((film, i) => ({
-        id: film.id.toString(),
+        id: `${film.id}f`,
         type: 'custom',
         position: { x: horizontalGapNodes * (i + 0.5) + 10, y: 150 },
         data: {
@@ -162,7 +162,7 @@ const PersonGraph: FC<Props> = ({ params }): JSX.Element => {
           }[]
         >((allVehiclesStorage, vehicleWithFilmId) => {
           const vehiclesNodes = vehicleWithFilmId.herosVehicles.map((vehicle, i) => ({
-            id: vehicle.id.toString(),
+            id: `${vehicle.id}v`,
             type: 'custom',
             position: { x: horizontalGapNodes * (i + 1) + 10, y: 300 },
             data: {
@@ -170,40 +170,50 @@ const PersonGraph: FC<Props> = ({ params }): JSX.Element => {
             },
           }));
 
-          return [heroNode, ...allVehiclesStorage, ...vehiclesNodes];
+          return [...allVehiclesStorage, ...vehiclesNodes];
         }, []);
 
-        edgesFromFilmsToVehicle = allVehiclesNodes.map((vehicleNode) => {
-          const relatedFilm = films.find((film) => film.vehicles.includes(Number(vehicleNode.id)));
+        edgesFromFilmsToVehicle = [];
 
-          return relatedFilm
-            ? {
-                id: `${relatedFilm.id}->${vehicleNode.id}`,
-                source: relatedFilm.id.toString(),
-                target: vehicleNode.id,
-              }
-            : {
-                id: '',
-                source: '',
-                target: '',
-              };
+        films.forEach((film) => {
+          const filmVehicles = film.vehicles;
+          const heroVehicles = hero.vehicles;
+
+          heroVehicles.some((vehicleId) => {
+            if (filmVehicles.includes(vehicleId)) {
+              edgesFromFilmsToVehicle.push({
+                id: `${film.id}f->${vehicleId}`,
+                source: `${film.id}f`,
+                target: `${vehicleId}v`,
+              });
+
+              return true;
+            }
+
+            return false;
+          });
         });
       }
 
-      const edgesFromHeroNode = filmsNodes.map((filmNode) => ({
+      const edgesFromHeroToFilms = filmsNodes.map((filmNode) => ({
         id: `${heroNode.id}->${filmNode.id}`,
         source: heroNode.id,
         target: filmNode.id,
       }));
 
-      setEdges([...edgesFromHeroNode, ...edgesFromFilmsToVehicle]);
+      setEdges([...edgesFromHeroToFilms, ...edgesFromFilmsToVehicle]);
       setNodes([heroNode, ...filmsNodes, ...allVehiclesNodes]);
     }
   }, [hero, films.length, setNodes, vehicles, films, setEdges]);
 
   return (
     <div className="h-screen">
-      <ReactFlow defaultViewport={defaultViewport} edges={edges} nodeTypes={nodeTypes} nodes={nodes} />
+      <ReactFlow
+        defaultViewport={defaultViewport}
+        edges={edges}
+        nodeTypes={nodeTypes}
+        nodes={nodes}
+      />
     </div>
   );
 };
